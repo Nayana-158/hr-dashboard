@@ -2,6 +2,7 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import TabsContent from '@/components/TabsContent'
 
+// Fetch user data from the API
 const fetchUser = async (id: string) => {
   try {
     const res = await axios.get(`https://dummyjson.com/users/${id}`)
@@ -25,11 +26,14 @@ const fetchUser = async (id: string) => {
   }
 }
 
-export default async function EmployeePage({
-  params,
-}: {
-  params: { id: string }
-}) {
+// Define correct props type
+type PageProps = {
+  params: {
+    id: string
+  }
+}
+
+export default async function EmployeePage({ params }: PageProps) {
   const user = await fetchUser(params.id)
 
   if (!user) return notFound()
@@ -54,5 +58,6 @@ export default async function EmployeePage({
     </main>
   )
 }
+
 
 
