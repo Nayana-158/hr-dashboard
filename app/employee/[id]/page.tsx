@@ -31,7 +31,7 @@ const fetchUser = async (id: string) => {
   }
 }
 
-export default async function EmployeePage({ params }: PageProps) {
+export default async function EmployeePage({ params }: { params: { id: string } }) {
   const user = await fetchUser(params.id)
 
   if (!user) return notFound()
