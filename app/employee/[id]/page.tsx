@@ -25,7 +25,6 @@ const fetchUser = async (id: string) => {
   }
 }
 
-// ❗ Use inline param typing to avoid type mismatch
 export default async function EmployeePage({
   params,
 }: {
@@ -55,3 +54,4 @@ export default async function EmployeePage({
     </main>
   )
 }
+
