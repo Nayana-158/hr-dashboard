@@ -2,7 +2,7 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import TabsContent from '@/components/TabsContent'
 
-// Fetch user data from the API
+// 1. Fetch a single user by ID
 const fetchUser = async (id: string) => {
   try {
     const res = await axios.get(`https://dummyjson.com/users/${id}`)
@@ -26,14 +26,12 @@ const fetchUser = async (id: string) => {
   }
 }
 
-// Define correct props type
-type PageProps = {
-  params: {
-    id: string
-  }
-}
-
-export default async function EmployeePage({ params }: PageProps) {
+// 2. Page component
+export default async function EmployeePage({
+  params,
+}: {
+  params: { id: string }
+}) {
   const user = await fetchUser(params.id)
 
   if (!user) return notFound()
@@ -58,6 +56,17 @@ export default async function EmployeePage({ params }: PageProps) {
     </main>
   )
 }
+
+// 3. Static generation for dynamic paths (optional but recommended)
+export async function generateStaticParams() {
+  const res = await axios.get('https://dummyjson.com/users')
+  const users = res.data.users
+
+  return users.map((user: any) => ({
+    id: user.id.toString(),
+  }))
+}
+
 
 
 
