@@ -2,12 +2,6 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import TabsContent from '@/components/TabsContent'
 
-type PageProps = {
-  params: {
-    id: string
-  }
-}
-
 const fetchUser = async (id: string) => {
   try {
     const res = await axios.get(`https://dummyjson.com/users/${id}`)
@@ -26,12 +20,17 @@ const fetchUser = async (id: string) => {
         'Mentored junior staff on Agile methods',
       ],
     }
-  } catch (err) {
+  } catch {
     return null
   }
 }
 
-export default async function EmployeePage({ params }: { params: { id: string } }) {
+// ❗ Use inline param typing to avoid type mismatch
+export default async function EmployeePage({
+  params,
+}: {
+  params: { id: string }
+}) {
   const user = await fetchUser(params.id)
 
   if (!user) return notFound()
