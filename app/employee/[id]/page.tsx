@@ -2,7 +2,7 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import TabsContent from '@/components/TabsContent'
 
-type Params = {
+type PageProps = {
   params: {
     id: string
   }
@@ -31,7 +31,7 @@ const fetchUser = async (id: string) => {
   }
 }
 
-export default async function EmployeePage({ params }: Params) {
+export default async function EmployeePage({ params }: PageProps) {
   const user = await fetchUser(params.id)
 
   if (!user) return notFound()
